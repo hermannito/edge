@@ -25,4 +25,13 @@ spec:
   owner: infrastructure-team
   domain: infrastructure
 ---
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: backstage-templates
+  description: Collection de templates pour Backstage
+spec:
+  targets:
+    - template.yaml
+    # Ajoutez d'autres templates ici au fur et à mesure
 
