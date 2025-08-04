@@ -1,40 +1,99 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: pull-request
-  title: Pull Request Action template
-  description: scaffolder v1beta3 template demo publishing to PR on existing git repository
+  name: eks-cluster
+  title: Créer un cluster Amazon EKS
+  description: Déployez un cluster Amazon EKS via Crossplane
+  tags:
+    - aws
+    - kubernetes
+    - eks
+    - crossplane
 spec:
   owner: infrastructure-team
   type: service
-
+  
   parameters:
-    - title: Fill in some steps
+    - title: Informations de base
       required:
-        - name
+        - clusterName
       properties:
-        name:
-          title: Name
+        clusterName:
+          title: Nom du cluster
           type: string
-          description: Unique name of the component
-          ui:field: EntityNamePicker
+          description: Nom du cluster EKS à créer
           ui:autofocus: true
-        description:
-          title: Description
-          type: string
-          description: Description of the component
-        targetPath:
-          title: Target Path in repo
-          type: string
-          description: Name of the directory to create in the repository
-    - title: Choose a location
+    
+    - title: Configuration du cluster
       required:
-        - repoUrl
+        - version
+        - networkId
       properties:
-        repoUrl:
-          title: Repository Location
+        version:
+          title: Version Kubernetes
           type: string
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-              - github.com
+          description: Version de Kubernetes à utiliser
+          default: "1.33"
+          enum:
+            - "1.32"
+            - "1.33"
+            - "1.34"
+        networkId:
+          title: ID du réseau
+          type: string
+          description: ID du réseau à utiliser
+          default: dev-net
+    
+    - title: Configuration des nœuds worker
+      required:
+        - instanceType
+        - desiredCapacity
+      properties:
+        instanceType:
+          title: Type d'instance
+          type: string
+          description: Type d'instance EC2 pour les nœuds worker
+          default: c6id.4xlarge
+          enum:
+            - t3.large
+            - m5.large
+            - c6id.4xlarge
+        desiredCapacity:
+          title: Capacité désirée
+          type: number
+          description: Nombre de nœuds worker souhaité
+          default: 1
+          minimum: 1
+          maximum: 10
+        minSize:
+          title: Taille minimale
+          type: number
+          description: Nombre minimum de nœuds worker
+          default: 1
+          minimum: 1
+        maxSize:
+          title: Taille maximale
+          type: number
+          description: Nombre maximum de nœuds worker
+          default: 3
+          minimum: 1
+  
+  steps:
+  - id: logClusterCreation
+    name: Simuler la création du cluster
+    action: debug:log
+    input:
+      message: |
+        Création du cluster EKS avec les paramètres suivants :
+        - Nom: ${{ parameters.clusterName }}
+        - Version: ${{ parameters.version }}
+        - Network ID: ${{ parameters.networkId }}
+        - Type d'instance: ${{ parameters.instanceType }}
+        - Capacité désirée: ${{ parameters.desiredCapacity }}
+  
+  - id: logClusterReady
+    name: Simuler l'attente du cluster
+    action: debug:log
+    input:
+      message: |
+        Le cluster ${{ parameters.clusterName }} est maintenant prêt !
