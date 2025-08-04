@@ -10,3 +10,18 @@ spec:
   type: service
   lifecycle: production
   owner: infrastructure-team
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: amazon-eks-clusters
+  description: "Clusters Amazon EKS provisionnés via Crossplane"
+  annotations:
+    kubernetes.io/cluster-name: management-cluster
+    backstage.io/kubernetes-label-selector: 'cluster.upbound.io/amazoneks'
+    kubernetes.io/namespace: default
+spec:
+  type: resource
+  lifecycle: production
+  owner: infrastructure-team
+  system: cloud-platform
