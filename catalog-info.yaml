@@ -25,35 +25,4 @@ spec:
   owner: infrastructure-team
   domain: infrastructure
 ---
-apiVersion: backstage.io/v1alpha1
-kind: Resource
-metadata:
-  name: cluster-eks
-  annotations:
-    kubernetes.io/cluster-name: management-cluster
-    backstage.io/kubernetes-label-selector: 'app' 
-#    backstage.io/kubernetes-id: my-service 
-    kubernetes.io/namespace: crossplane-system
-spec:
-  type: kubernetes-cluster
-  lifecycle: production
-  owner: infrastructure-team
-  system: cloud-platform
----
-apiVersion: backstage.io/v1alpha1
-kind: Component
-metadata:
-  annotations:
-    backstage.io/kubernetes-id: management-cluster
-    backstage.io/kubernetes-namespace: crossplane-system
-  name: cluster-edge
-  description: It rolls dice
-  tags:
-    - go
-spec:
-  type: service
-  lifecycle: production
-  owner: infrastructure-team
-  system: cloud-platform
-
 
