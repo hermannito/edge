@@ -6,7 +6,7 @@ metadata:
   annotations:
     kubernetes.io/cluster-name: management-cluster
     backstage.io/kubernetes-label-selector: 'pod-template-hash=69f6fc4ff9' 
-    backstage.io/kubernetes-id: management-cluster
+    #backstage.io/kubernetes-id: management-cluster
     kubernetes.io/namespace: crossplane-system
   tags:
     - website
