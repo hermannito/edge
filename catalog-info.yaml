@@ -5,7 +5,7 @@ metadata:
   description: test adding componant
   annotations:
     kubernetes.io/cluster-name: management-cluster
-    backstage.io/kubernetes-label-selector: '' 
+    backstage.io/kubernetes-label-selector: 'pod-template-hash' 
     backstage.io/kubernetes-id: management-cluster
     kubernetes.io/namespace: crossplane-system
   tags:
